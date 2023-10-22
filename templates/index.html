@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block link %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div>
+            <div class="circle" id="circle1" onclick="transformToBlock('circle1', 'block1')">
+                <b>I</b>
+            </div>
+            
+            <form class="block" id="block1" action="" method="post">
+                <input type="number" id="S_max" name="s_max" placeholder="S_max">
+                <input type="number" id="S_min" name="s_min" placeholder="S_min">
+                <input type="number" id="D_max" name="d_max" placeholder="D_max">
+                <input type="number" id="F_max" name="f_max" placeholder="F_max">
+                <input id="block-button" type="submit" name="submit-rp_form" value="Submit">
+                <!-- <input type="number" id="S_max" name="S_max" placeholder="S_max">
+                <button id="block-button" type="submit" onclick="transformToCircle('circle1', 'block1')">Submit</button> -->    
+            </form>
+        </div>
+        <div>
+            <hr >
+        </div>
+        <div>
+            <div class="circle" id="circle2" onclick="transformToBlock('circle2', 'block2')">
+                <b>II</b>
+            </div>   
+            
+            <form class="block" id="block2" action="" method="post">
+                <input type="number" id="Area" name="area" placeholder="Area">
+                <input type="number" id="Floor" name="floor" placeholder="Floor">
+                <input type="number" id="Rank" name="rank" placeholder="Rank">
+                <input type="number" id="Distance" name="distance" placeholder="Distance">
+                <input id="block-button" type="submit" name="submit-uv_form" value="Submit">
+                <!-- <button id="block-button" type="submit" onclick="transformToCircle('circle2', 'block2')">Submit</button> -->
+            </form>
+        </div>
+        <div>
+            <hr >
+        </div>  
+        <div>
+            <div class="circle" id="circle3" onclick="transformToBlock('circle3', 'block3')">
+                <b>III</b>
+            </div>       
+            <div class="block" id="block3">
+                <div>
+                    <h1></h1>
+                    <p></p>
+                </div>
+                <div>
+                    <img src="" alt="img">
+                </div>
+                
+                <input id="block-button" type="submit" value="Submit" onclick="transformToCircle('circle3', 'block3')">
+            </div>     
+        </div>      
+    </div>
+{% endblock %}
