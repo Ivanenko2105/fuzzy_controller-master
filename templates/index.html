@@ -14,10 +14,10 @@
                 <b>I</b>
             </div>
             <form class="block-default" id="block1" action="/" method="post">
-                <input type="number" id="S_max" name="s_max" placeholder="S_max">
-                <input type="number" id="S_min" name="s_min" placeholder="S_min">
-                <input type="number" id="D_max" name="d_max" placeholder="D_max">
-                <input type="number" id="F_max" name="f_max" placeholder="F_max">
+                <input title="Max area of apartment among market" type="number" id="S_max" name="s_max" placeholder="max area">
+                <input title="Min area of apartment among market" type="number" id="S_min" name="s_min" placeholder="min area">
+                <input title="Max distance from the city-center" type="number" id="D_max" name="d_max" placeholder="max distance">
+                <input title="Max floor in building" type="number" id="F_max" name="f_max" placeholder="max floor">
                 <input class="block-default-button" type="submit" name="submit-rp_form" value="Submit">
             </form>       
             {% else %}
@@ -45,10 +45,10 @@
             </div>   
             
             <form class="block-default" id="block2" action="/" method="post">
-                <input type="number" id="Area" name="area" placeholder="Area">
-                <input type="number" id="Floor" name="floor" placeholder="Floor">
-                <input type="number" id="Rank" name="rank" placeholder="Rank">
-                <input type="number" id="Distance" name="distance" placeholder="Distance">
+                <input title="Range: {{range_values['s_min']}}-{{range_values['s_max']}}" type="number" id="Area" name="area" placeholder="Area">
+                <input title="Ranges: 1-{{range_values['f_max']}}" type="number" id="Floor" name="floor" placeholder="Floor">
+                <input title="Ranges: 1-10" type="number" id="Rank" name="rank" placeholder="Rank">
+                <input title="Ranges: 0-{{range_values['d_max']}}" type="number" id="Distance" name="distance" placeholder="Distance">
                 <input class="block-default-button" type="submit" name="submit-uv_form" value="Submit">
             </form>
             {% else %}

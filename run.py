@@ -21,7 +21,7 @@ def index():
 		for i in flags:
 			flags[i] = True
 
-		return render_template('index.html', flags=flags, result=None)
+		return render_template('index.html', flags=flags, range_values=range_values, result=None)
 	
 	elif "submit-rp_form" in request.form and flags['ranges_block_flag']:
 		
