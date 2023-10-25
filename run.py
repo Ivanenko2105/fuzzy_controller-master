@@ -22,9 +22,9 @@ def index():
 		distance = request.form.get('distance',0)
 		
 		crisp = [area, floor, rank, distance]
-		result = my_controller.get_result(crisp)
+		#result = my_controller.get_result(crisp)
 	
-	return render_template('index.html', result=result)
+	return render_template('index.html')
 
 
 if __name__=="__main__":
