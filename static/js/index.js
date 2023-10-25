@@ -29,6 +29,25 @@ function checkInput1() {
     }
 }
 
+function changeFormStyle(blockID, circleID, buttonID) {
+    const elements = Array.from(document.querySelector('#block1 input'));
+
+    for (const i in elements)
+        i.disabled = true;
+    
+    const block = document.getElementById(blockID);
+    const circle = document.getElementById(circleID);
+    const button = document.getElementById(buttonID);
+    block.style.backgroundColor = "#a9e434";
+    block.style.border = "1px solid #a9e434";
+    circle.style.backgroundColor = "#a9e434";
+    button.style.backgroundColor = "#a9e434";
+    button.style.border = "#a9e434";
+    button.addEventListener('mouseover', () => {
+        button.style.backgroundColor = '#e8f8c6';
+      });
+}
+
 // // Function to check input and perform animation for circle 2
 // function checkInput2() {
 //     const input2_1 = document.getElementById("field2_1").value;

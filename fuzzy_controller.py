@@ -1,7 +1,6 @@
 import model
 import inference_mamdani
 
-
 class FuzzyController:
 	def __init__(self, S_max: float, S_min: float, F_max: int, D_max: float) -> None:
 		"""

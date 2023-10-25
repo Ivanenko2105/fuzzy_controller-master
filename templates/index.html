@@ -9,55 +9,93 @@
 {% block body %}
     <div class="container">
         <div>
-            <div class="circle" id="circle1" onclick="transformToBlock('circle1', 'block1')">
+            {% if flags['ranges_block_flag'] %}
+            <div class="circle-default" id="circle1" onclick="transformToBlock('circle1', 'block1')">
                 <b>I</b>
             </div>
-            
-            <form class="block" id="block1" action="" method="post">
-                <input type="number" id="S_max" name="s_max" placeholder="S_max">
-                <input type="number" id="S_min" name="s_min" placeholder="S_min">
-                <input type="number" id="D_max" name="d_max" placeholder="D_max">
-                <input type="number" id="F_max" name="f_max" placeholder="F_max">
-                <input id="block-button" type="submit" name="submit-rp_form" value="Submit">
-                <!-- <input type="number" id="S_max" name="S_max" placeholder="S_max">
-                <button id="block-button" type="submit" onclick="transformToCircle('circle1', 'block1')">Submit</button> -->    
-            </form>
+            <form class="block-default" id="block1" action="/" method="post">
+                <input title="Max area of apartment among market" type="number" id="S_max" name="s_max" placeholder="max area">
+                <input title="Min area of apartment among market" type="number" id="S_min" name="s_min" placeholder="min area">
+                <input title="Max distance from the city-center" type="number" id="D_max" name="d_max" placeholder="max distance">
+                <input title="Max floor in building" type="number" id="F_max" name="f_max" placeholder="max floor">
+                <input class="block-default-button" type="submit" name="submit-rp_form" value="Submit">
+            </form>       
+            {% else %}
+            <div class="circle-passed" id="circle1" onclick="transformToBlock('circle1', 'block1')">
+                <b>I</b>
+            </div>
+            <form class="block-passed" id="block1" action="/" method="post">
+                <input type="number" id="S_max" name="s_max" placeholder="{{ range_values['s_max'] }}" disabled>
+                <input type="number" id="S_min" name="s_min" placeholder="{{ range_values['s_min'] }}" disabled>
+                <input type="number" id="D_max" name="d_max" placeholder="{{ range_values['d_max'] }}" disabled>
+                <input type="number" id="F_max" name="f_max" placeholder="{{ range_values['f_max'] }}" disabled>
+                <input class="block-passed-button" type="submit" name="change-rp_form" value="Change">
+            </form>       
+            {% endif %}
         </div>
+        
         <div>
-            <hr >
+            <hr>
         </div>
+
         <div>
-            <div class="circle" id="circle2" onclick="transformToBlock('circle2', 'block2')">
+            {% if flags['user_values_block_flag'] %}
+            <div class="circle-default" id="circle2" onclick="transformToBlock('circle2', 'block2')">
                 <b>II</b>
             </div>   
             
-            <form class="block" id="block2" action="" method="post">
+            <form class="block-default" id="block2" action="/" method="post">
+                <input title="Range: {{range_values['s_min']}}-{{range_values['s_max']}}" type="number" id="Area" name="area" placeholder="Area">
+                <input title="Ranges: 1-{{range_values['f_max']}}" type="number" id="Floor" name="floor" placeholder="Floor">
+                <input title="Ranges: 1-10" type="number" id="Rank" name="rank" placeholder="Rank">
+                <input title="Ranges: 0-{{range_values['d_max']}}" type="number" id="Distance" name="distance" placeholder="Distance">
+                <input class="block-default-button" type="submit" name="submit-uv_form" value="Submit">
+            </form>
+            {% else %}
+            <div class="circle-passed" id="circle2" onclick="transformToBlock('circle2', 'block2')">
+                <b>II</b>
+            </div>   
+            
+            <form class="block-passed" id="block2" action="/" method="post">
                 <input type="number" id="Area" name="area" placeholder="Area">
                 <input type="number" id="Floor" name="floor" placeholder="Floor">
                 <input type="number" id="Rank" name="rank" placeholder="Rank">
                 <input type="number" id="Distance" name="distance" placeholder="Distance">
-                <input id="block-button" type="submit" name="submit-uv_form" value="Submit">
-                <!-- <button id="block-button" type="submit" onclick="transformToCircle('circle2', 'block2')">Submit</button> -->
+                <input class="block-passed-button" type="submit" name="submit-uv_form" value="Submit">
             </form>
+            {% endif %}
         </div>
         <div>
             <hr >
         </div>  
+        
         <div>
-            <div class="circle" id="circle3" onclick="transformToBlock('circle3', 'block3')">
+            {% if flags['result_block_flag'] %}
+            <div class="circle-default" id="circle3">
+                <b>III</b>
+            </div>        
+            {% else %}
+            <div class="circle-passed" id="circle3" onclick="transformToBlock('circle3', 'block3')">
                 <b>III</b>
             </div>       
-            <div class="block" id="block3">
+            <div class="block-passed block-result" id="block3">
+                {% if result %}
                 <div>
-                    <h1>{{ result }}</h1>
-                    <p></p>
+                    <h4>{{ result[0].upper() }} ( {{ result[1] }} )</h4>
+                </div>
+                <div>
+                    <img src="{{ url_for('static', filename='img/{}.png'.format(result[0])) }}" alt="img">
+                </div>
+                {% else %}
+                <div>
+                    <h1>Result</h1>
                 </div>
                 <div>
                     <img src="" alt="img">
                 </div>
-                
-                <input id="block-button" type="submit" value="Submit" onclick="transformToCircle('circle3', 'block3')">
+                {% endif %}
             </div>     
+            {% endif %}
         </div>      
     </div>
 {% endblock %}
