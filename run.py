@@ -10,7 +10,11 @@ flags = {'ranges_block_flag': True,
 		 'user_values_block_flag': True, 
 		 'result_block_flag': True}
 
-range_values = {}
+range_values = {'s_max': 0,
+				's_min': 0,
+				'd_max': 0,
+				'f_max': 0}
+
 my_controller = FuzzyController(10,10,10,10)
 
 @app.route('/', methods=['POST','GET'])
@@ -21,39 +25,42 @@ def index():
 		for i in flags:
 			flags[i] = True
 
-		return render_template('index.html', flags=flags, range_values=range_values, result=None)
+		return render_template('index.html', flags=flags, range_values=range_values)
 	
 	elif "submit-rp_form" in request.form and flags['ranges_block_flag']:
 		
-		range_values['s_max'] = request.form.get('s_max',0, type=int)
-		range_values['s_min'] = request.form.get('s_min',0, type=int)
-		range_values['d_max'] = request.form.get('d_max',0, type=int)
-		range_values['f_max'] = request.form.get('f_max',0, type=int) 
-	
 		flags['ranges_block_flag'] = False
+		
+		for v in range_values:
+			range_values[v] = request.form.get(v, 1, type=int)
+	
 		try:
-			my_controller.change_model_parameters(range_values['s_max'], range_values['s_min'], range_values['d_max'], range_values['f_max'])
+			my_controller.change_model_parameters(
+				range_values['s_max'], 
+				range_values['s_min'], 
+				range_values['d_max'], 
+				range_values['f_max'])
 		except BaseException as err:			
-			print(f'++++++++++++\n{err}')
+			print(f'Error: {err}')
 
-
-		return render_template('index.html', flags=flags, range_values=range_values, result=None)
+		return render_template('index.html', flags=flags, range_values=range_values)
 
 	elif "submit-uv_form" in request.form:
-		area = int(request.form.get('area',0))
-		floor = int(request.form.get('floor',0))
-		rank = int(request.form.get('rank',0))
-		distance = int(request.form.get('distance',0))
 		
-		flags['user_values_block_flag'] = False
-		flags['result_block_flag'] = False
+		for i in flags:
+			flags[i] = False
+		
+		area = request.form.get('area', 1, type=int)
+		floor = request.form.get('floor', 1, type=int)
+		rank = request.form.get('rank', 1, type=int)
+		distance = request.form.get('distance', 1, type=int)
 
 		crisp = [area, floor, rank, distance]
 		result = my_controller.get_result(crisp)
 		
 		return render_template('index.html', flags=flags, range_values=range_values, result=result)
 	
-	return render_template('index.html', flags=flags, range_values=range_values, result=None)
+	return render_template('index.html', flags=flags, range_values=range_values)
 
 
 if __name__=="__main__":
