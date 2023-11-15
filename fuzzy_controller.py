@@ -49,6 +49,21 @@ class FuzzyController:
 		denormalization_result = self.__denormalization(result[0], 1, 10)
 		return (result[1], denormalization_result)
 
-	def change_model_parameters(self, S_max: float, S_min: float, F_max: int, D_max: float):
+	def change_model_parameters(self, chosen_model, S_max: float, S_min: float, F_max: int, D_max: float):
+		if chosen_model == 1:
+			self.model = model
+			self.inference_mamdani = inference_mamdani
+			self.real_min = 0.07516129032258065
+			self.real_max = 0.9328205128205128
+			self.coef = 1
+		else:
+			self.model = model_2
+			self.inference_mamdani = t2_mandani_inference
+			self.real_min = 0.4387793427230046
+			self.real_max = 9.218827404479581
+			self.coef = 10
+
 		self.max_values = [S_max, F_max, 10, D_max]
 		self.min_values = [S_min, 1, 1, 0]
+
+		self.inference_mamdani.preprocessing(self.model.input_lvs, self.model.output_lv)
