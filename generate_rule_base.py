@@ -1,18 +1,24 @@
-from model import input_lvs
+from model_2 import input_lvs
 from itertools import product
 
-area = {"minimal": 0,
-		"modest": 0.33,
-		"comfortable": 0.66,
-		"spacious": 1}
+area = {"Very small": 0,
+		"Small": 0.2,
+		"Average": 0.4,
+		"Large": 0.6,
+		"Very large": 0.8,
+		"Extra large": 1}
 
-floor = {"lower": 0,
-		 "middle": 0.5,
-		 "upper": 1}
+floor = {"Lower": 0,
+		 "Below middle": 0.33,
+		 "Above middle": 0.66,
+		 "Upper": 1}
 
-сondition = {"new": 1,
-		     "in good condition": 0.5,
-		     "needs repair": 0}
+сondition = {"Very poor": 0,
+			 "Poor": 0.2,
+			 "Average": 0.4,
+			 "Good": 0.6,
+			 "Very good": 0.8,
+			 "Excellent": 1}
 
 distance = {"in the center": 1,
 			"near the center": 0.66,
@@ -24,12 +30,13 @@ coef = {"Area": 0.4,
 		"Condition": 0.35,
 		"Distance to the city center": 0.15}
 
-Class = {"luxurious": 0.85,
-		"expensive": 0.65,
-		"moderately expensive": 0.4,
-		"average price": 0.25,
-		"economical": 0.15,
-		"budget": 0}
+Class = {"Extremely high": 0.736,
+	     "Very high": 0.623,
+		 "High": 0.543,
+		 "Average": 0.46,
+		 "Favorable": 0.379,
+		 "Low": 0.2695,
+		 "Very low": 0}
 
 
 # Извлекаем имена терминов принадлежности для каждой переменной
@@ -39,6 +46,7 @@ term_names_lists = [list(var['terms'].keys()) for var in input_lvs]
 combinations = list(product(*term_names_lists))
 rule_base = []
 values = set()
+keys = []
 for comb in combinations:
 	area_coef = area[comb[0]] * coef["Area"]
 	floor_coef = floor[comb[1]] * coef["Floor"]
@@ -49,14 +57,28 @@ for comb in combinations:
 
 	for key, value in Class.items():
 		if res >= value:
+			keys.append(key)
 			rule_base.append((comb, key))
 			break
 
+# set_key = set(keys)
+
+# for key in set_key:
+# 	print(key, "-", keys.count(key))
+
+# i = 0
 # for value in sorted(values):
-# 	print(value)
+# 	i = i + 1
+# 	if i == 70:
+# 		print(value)
+# 		i = 0
+
+for value in sorted(values):
+	print(value)
 
 # print(len(values))
 
-for rule in rule_base:
-	print(str(rule) + ",")
+# for rule in rule_base:
+# 	print(str(rule) + ",")
 
+# print(len(rule_base))

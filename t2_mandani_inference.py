@@ -10,8 +10,8 @@ import t2_similarity_measure
 
 def preprocessing(input_lvs, output_lv):
     for item in input_lvs:
-        item['U'] = np.arange(0, 10, 0.01)
-    output_lv['U'] = np.arange(0, 10, 0.01)
+        item['U'] = np.arange(0, 10.01, 0.01)
+    output_lv['U'] = np.arange(0, 10.01, 0.01)
 
     # Creation of the MFs
     for lv in input_lvs:

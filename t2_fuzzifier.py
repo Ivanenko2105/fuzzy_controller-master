@@ -1,9 +1,5 @@
 import numpy as np
 
-def __normalization(x, _range):
-    x_min, x_max, dx = _range
-    return (x - x_min) / (x_max - x_min) * 10
-
 
 def fuzzification(crisp_values, input_lvs):
     """
@@ -11,8 +7,7 @@ def fuzzification(crisp_values, input_lvs):
     """
     result = {}
     for index, crisp_value in enumerate(crisp_values):
-        x = __normalization(crisp_value, input_lvs[index]['X'])
-        x_curr = np.argmax(input_lvs[index]['U'] >= x)
+        x_curr = np.argmax(input_lvs[index]['U'] >= crisp_value)
         result[index] = {}
         for term_name, term in input_lvs[index]['terms'].items():
             if term['umf'][x_curr] > 0:
