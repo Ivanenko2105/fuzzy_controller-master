@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block link %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <main>
+        <section class="container">
+            <div class="container-content">
+                <div class="container-content-row1">
+                    <div>
+                        <p>НЕЧІТКИЙ ІНТЕЛЕКТУАЛЬНИЙ ІНТЕРФЕЙС <br> <span style="color: lightcyan">ДЛЯ ОЦІНКИ ВАРТОСТІ НЕРУХОМОСТІ</span></p>
+                    </div>
+                </div>
+
+                <div class="container-content-row2">
+                    <!-- circle-block#1 -->
+                    <div>
+                        {% if flags['ranges_block_flag'] %}
+                            
+                        <div class="circle-default circle-animate" id="circle1" onclick="transformToBlock('circle1', 'block1')">
+                            <b>I</b>
+                        </div>
+                        
+                        <form class="block-default placeholder-grey" id="block1" action="/" method="post">
+                            <div class="label-style">
+                                <input type="radio" id="model1" name="model" value="1" checked />
+                                <label style="padding: 0px 5px;" for="model1">model 1</label>
+                                <input type="radio" id="model2" name="model" value="2" />
+                                <label style="padding: 0px 5px;" for="model2">model 2</label>
+                            </div>
+                            <input title="Max area of apartment among market" type="number" id="S_max" name="s_max" placeholder="*" required>
+                            <input title="Min area of apartment among market" type="number" id="S_min" name="s_min" placeholder="*" required>
+                            <input title="Max distance from the city-center" type="number" id="D_max" name="d_max" placeholder="*" required>
+                            <input title="Max floor in building" type="number" id="F_max" name="f_max" placeholder="*" required>
+                            <input class="block-default-button" type="submit" name="submit-rp_form" value="Submit">
+                        </form>       
+                        
+                        {% else %}
+                        
+                        <div class="circle-passed circle-animate" id="circle1" onclick="transformToBlock('circle1', 'block1')">
+                            <b>I</b>
+                        </div>
+                        
+                        <form class="block-default placeholder-white" id="block1" action="/" method="post">
+                            <div>
+                                <input type="radio" id="model1" name="model" value="1" checked />
+                                <label style="padding: 0px 5px;" for="model1">model-1</label>
+                                <input type="radio" id="model2" name="model" value="2" />
+                                <label style="padding: 0px 5px;" for="model2">model-2</label>
+                            </div>
+                            <input type="number" id="S_max" name="s_max" placeholder="{{ range_values['s_max'] }}" disabled>
+                            <input type="number" id="S_min" name="s_min" placeholder="{{ range_values['s_min'] }}" disabled>
+                            <input type="number" id="D_max" name="d_max" placeholder="{{ range_values['d_max'] }}" disabled>
+                            <input type="number" id="F_max" name="f_max" placeholder="{{ range_values['f_max'] }}" disabled>
+                            <input class="block-default-button" type="submit" name="change-rp_form" value="Change">
+                        </form>       
+                        
+                        {% endif %}
+                    </div>
+                    
+                    <!-- hr -->
+                    <div>
+                        <hr>
+                    </div>
+                    
+                    <!-- circle-block#2 -->
+                    <div>
+                        {% if flags['user_values_block_flag'] %}
+                            
+                        <div class="circle-default circle-animate" id="circle2" onclick="transformToBlock('circle2', 'block2')">
+                            <b>II</b>
+                        </div> 
+            
+                        {% if flags['ranges_block_flag'] %}
+                            
+                        <form class="block-default placeholder-white" id="block2" action="/" method="post">
+                            <input id="Area" title="Range: {{range_values['s_min']}}-{{range_values['s_max']}}" type="number" min="{{range_values['s_min']}}" max="{{range_values['s_max']}}" name="area" placeholder="Area" required disabled>
+                            <input id="Floor" title="Range: 1-{{range_values['f_max']}}" type="number" min="1" max="{{range_values['f_max']}}" name="floor" placeholder="Floor" required disabled>
+                            <input id="Rank" title="Range: 1-10" type="number" min="1" max="10" name="rank" placeholder="Rank" required disabled>
+                            <input id="Distance" title="Range: 0-{{range_values['d_max']}}" type="number" min="0" max="{{range_values['d_max']}}" name="distance" placeholder="Distance" required disabled>
+                            <input class="block-default-button" type="submit" name="submit-uv_form" value="Submit" disabled>
+                        </form>
+                        
+                        {% else %}
+            
+                        <form class="block-default" id="block2" action="/" method="post">
+                            <input id="Area" title="Range: {{range_values['s_min']}}-{{range_values['s_max']}}" type="number" min="{{range_values['s_min']}}" max="{{range_values['s_max']}}" name="area" placeholder="Area" required>
+                            <input id="Floor" title="Range: 1-{{range_values['f_max']}}" type="number" min="1" max="{{range_values['f_max']}}" name="floor" placeholder="Floor" required>
+                            <input id="Rank" title="Range: 1-10" type="number" min="1" max="10" name="rank" placeholder="Rank" required>
+                            <input id="Distance" title="Range: 0-{{range_values['d_max']}}" type="number" min="0" max="{{range_values['d_max']}}" name="distance" placeholder="Distance" required>
+                            <input class="block-default-button" type="submit" name="submit-uv_form" value="Submit">
+                        </form>
+            
+                        {% endif %}
+                        
+                        {% else %}
+                        
+                        <div class="circle-passed circle-animate" id="circle2" onclick="transformToBlock('circle2', 'block2')">
+                            <b>II</b>
+                        </div>   
+                        
+                        <!-- <form class="block-default" id="block2" action="/" method="post">
+                            <input type="number" id="Area" name="area" placeholder="Area">
+                            <input type="number" id="Floor" name="floor" placeholder="Floor">
+                            <input type="number" id="Rank" name="rank" placeholder="Rank">
+                            <input type="number" id="Distance" name="distance" placeholder="Distance">
+                            <input class="block-default-button" type="submit" name="submit-uv_form" value="Submit">
+                        </form> -->
+                        <form class="block-default" id="block2" action="/" method="post">
+                            <input id="Area" title="Range: {{range_values['s_min']}}-{{range_values['s_max']}}" type="number" min="{{range_values['s_min']}}" max="{{range_values['s_max']}}" name="area" placeholder="Area" required>
+                            <input id="Floor" title="Range: 1-{{range_values['f_max']}}" type="number" min="1" max="{{range_values['f_max']}}" name="floor" placeholder="Floor" required>
+                            <input id="Rank" title="Range: 1-10" type="number" min="1" max="10" name="rank" placeholder="Rank" required>
+                            <input id="Distance" title="Range: 0-{{range_values['d_max']}}" type="number" min="0" max="{{range_values['d_max']}}" name="distance" placeholder="Distance" required>
+                            <input class="block-default-button" type="submit" name="submit-uv_form" value="Submit">
+                        </form>
+                        
+                        {% endif %}
+                    </div>
+            
+                    <!-- hr -->
+                    <div>
+                        <hr> 
+                    </div> 
+                    
+                    <!-- circle-block#3 -->
+                    <div>
+                        {% if flags['result_block_flag'] %}
+                        <div class="circle-default circle-animate" id="circle3">
+                            <b>III</b>
+                        </div>        
+                        {% else %}
+                            <div class="circle-passed" id="circle3" onclick="transformToBlock('circle3', 'block3')">
+                                <b>III</b>
+                            </div>       
+                            <div class="block-default block-result" id="block3">
+                                {% if result %}
+                                <div>
+                                    <h4>{{ result[0].upper() }} ( {{ result[1] }}/10 )</h4>
+                                </div>
+                                <div>
+                                    <img src="{{ url_for('static', filename='img/{}.png'.format(result[0])) }}" alt="img">
+                                </div>
+                                {% endif %}
+                            </div>     
+                        {% endif %}   
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

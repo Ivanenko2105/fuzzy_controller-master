@@ -1,5 +1,4 @@
-from tkinter import NO
-from flask import Flask, render_template, redirect, url_for, request, session, abort
+from flask import Flask, render_template, request
 from fuzzy_controller import FuzzyController
 
 app = Flask(__name__)
@@ -10,12 +9,13 @@ flags = {'ranges_block_flag': True,
 		 'user_values_block_flag': True, 
 		 'result_block_flag': True}
 
-range_values = {'s_max': 0,
+range_values = {'model': 0,
+				's_max': 0,
 				's_min': 0,
 				'd_max': 0,
 				'f_max': 0}
 
-my_controller = FuzzyController(10,10,10,10)
+my_controller = FuzzyController(1,10,10,10,10)
 
 @app.route('/', methods=['POST','GET'])
 def index():
@@ -25,7 +25,7 @@ def index():
 		for i in flags:
 			flags[i] = True
 
-		return render_template('index.html', flags=flags, range_values=range_values)
+		return render_template('tmp.html', flags=flags, range_values=range_values)
 	
 	elif "submit-rp_form" in request.form and flags['ranges_block_flag']:
 		
@@ -36,6 +36,7 @@ def index():
 	
 		try:
 			my_controller.change_model_parameters(
+				range_values['model'],
 				range_values['s_max'], 
 				range_values['s_min'], 
 				range_values['d_max'], 
@@ -43,7 +44,7 @@ def index():
 		except BaseException as err:			
 			print(f'Error: {err}')
 
-		return render_template('index.html', flags=flags, range_values=range_values)
+		return render_template('tmp.html', flags=flags, range_values=range_values)
 
 	elif "submit-uv_form" in request.form:
 		
@@ -58,9 +59,9 @@ def index():
 		crisp = [area, floor, rank, distance]
 		result = my_controller.get_result(crisp)
 		
-		return render_template('index.html', flags=flags, range_values=range_values, result=result)
+		return render_template('tmp.html', flags=flags, range_values=range_values, result=result)
 	
-	return render_template('index.html', flags=flags, range_values=range_values)
+	return render_template('tmp.html', flags=flags, range_values=range_values)
 
 
 if __name__=="__main__":
